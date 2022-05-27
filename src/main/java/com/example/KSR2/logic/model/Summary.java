@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class Summary {
-    @Id
-    Long id;
+
     private Quantifier quantifier;
     private List<Label> qualifiers = new ArrayList<>();
     private List<Label> summarizers = new ArrayList<>();

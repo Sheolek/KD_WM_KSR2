@@ -17,6 +17,6 @@ public class QuantifierService {
     private QuantifierRepository quantifierRepository;
 
     public List<Quantifier> getQuantifiers() {
-        return quantifierRepository.findAll();
+        return quantifierRepository.getQuantifiers();
     }
 }

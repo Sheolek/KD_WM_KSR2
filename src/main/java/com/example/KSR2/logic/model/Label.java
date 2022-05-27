@@ -5,15 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Id;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Label {
-    @Id
-    Long id;
     private String name;
     private FuzzySet set;
 
