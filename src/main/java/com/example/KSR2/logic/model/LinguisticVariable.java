@@ -1,11 +1,13 @@
 package com.example.KSR2.logic.model;
 
 import com.example.KSR2.logic.model.classicSet.ClassicSet;
+import com.example.KSR2.logic.model.classicSet.Continuous;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -16,6 +18,12 @@ public class LinguisticVariable {
     String name;
     ClassicSet universe;
     List<Label> labels;
+
+    public LinguisticVariable(String name, ClassicSet set) {
+        this.name = name;
+        this.universe = set;
+        this.labels = new ArrayList<>();
+    }
 
     public void addLabel(Label label) {
         labels.add(label);
