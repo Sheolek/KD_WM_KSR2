@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Measures {
+    private double[] weights;
     private double T1degreeOfTruth = 0;
     private double T2degreeOfImprecision = 0;
     private double T3degreeOfCovering = 0;
@@ -21,7 +22,7 @@ public class Measures {
     private double T11lengthOfQualifier = 0;
     private double goodnessOfSummary = 0;
 
-    public void calculateMeasures(Summary summary) {
+    public void calculateMeasures(Summary summary, double[] weights) {
         return;
     }
 }

@@ -17,8 +17,8 @@ public class Summary {
     private List<Label> summarizers = new ArrayList<>();
     private Measures measures = new Measures();
 
-    public void calculateMeasures() {
-        measures.calculateMeasures(this);
+    public void calculateMeasures(double[] weights) {
+        measures.calculateMeasures(this, weights);
     }
 
     public boolean addSummarizer(Label summarizer) {

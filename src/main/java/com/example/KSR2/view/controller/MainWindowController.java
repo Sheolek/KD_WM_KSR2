@@ -1,14 +1,13 @@
 package com.example.KSR2.view.controller;
 
 import com.example.KSR2.logic.Initializer;
-import com.example.KSR2.logic.model.House;
+import com.example.KSR2.logic.model.*;
 import com.example.KSR2.logic.model.Label;
-import com.example.KSR2.logic.model.Quantifier;
-import com.example.KSR2.logic.model.Summary;
 import com.example.KSR2.logic.service.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +26,16 @@ public class MainWindowController implements Initializable {
     private final QuantifierService quantifierService;
     private final SummarizerService summarizerService;
     private final SummaryService summaryService;
+    private List<LinguisticVariable> quantifierVariable;
 
     @FXML
     public AnchorPane listAnchorPane;
 
     @FXML
     public TableView<House> houseTable;
-    public TreeView<Quantifier> quantifiersTree;
-    public TreeView<Label> qualifiersTree;
-    public TreeView<Label> summarizersTree;
+    public TreeView<String> quantifiersTree;
+    public TreeView<String> qualifiersTree;
+    public TreeView<String> summarizersTree;
     public Button generateButton;
     public Button resetButton;
     public TextField t1Weight;
@@ -71,6 +71,8 @@ public class MainWindowController implements Initializable {
         linguisticVariableService.getLinguisticVariableRepository().setVariables(initializer.getVariables());
         quantifierService.getQuantifierRepository().setQuantifiers(initializer.getQuantifiers());
         summarizerService.getSummarizerRepository().setSummarizers(initializer.getSummarizers());
+        quantifierVariable = initializer.getQuantifiersVariable();
+        initializeTrees();
     }
 
     private void initializeHouseTable() {
@@ -125,4 +127,48 @@ public class MainWindowController implements Initializable {
             houseTable.getItems().add(house);
         }
     }
+
+    private void initializeTrees() {
+        CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Kwalifikatory");
+        for (LinguisticVariable variable : linguisticVariableService.getVariables()) {
+            CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(variable.getName());
+            variableItem.setExpanded(true);
+            for (Label label : variable.getLabels()) {
+                CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+                variableItem.getChildren().add(labelItem);
+            }
+            root.getChildren().add(variableItem);
+        }
+        qualifiersTree.setRoot(root);
+        qualifiersTree.setCellFactory(CheckBoxTreeCell.forTreeView());
+
+        root = new CheckBoxTreeItem<>("Sumaryzatory");
+        for (LinguisticVariable variable : linguisticVariableService.getVariables()) {
+            CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(variable.getName());
+            variableItem.setExpanded(true);
+            for (Label label : variable.getLabels()) {
+                CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+                variableItem.getChildren().add(labelItem);
+            }
+            root.getChildren().add(variableItem);
+        }
+        summarizersTree.setRoot(root);
+        summarizersTree.setCellFactory(CheckBoxTreeCell.forTreeView());
+
+        root = new CheckBoxTreeItem<>("Kwantyfikatory");
+        for (LinguisticVariable variable : quantifierVariable) {
+            CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(variable.getName());
+            variableItem.setExpanded(true);
+            for (Label label : variable.getLabels()) {
+                CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+                variableItem.getChildren().add(labelItem);
+            }
+            root.getChildren().add(variableItem);
+        }
+        quantifiersTree.setRoot(root);
+        quantifiersTree.setCellFactory(CheckBoxTreeCell.forTreeView());
+    }
+
+
+
 }

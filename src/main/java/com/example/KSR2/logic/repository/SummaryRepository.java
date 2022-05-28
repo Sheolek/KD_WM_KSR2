@@ -27,4 +27,8 @@ public class SummaryRepository {
     public Summary getSummarizerById(int id) {
         return summaries.get(id);
     }
+
+    public void reset() {
+        summaries = new ArrayList<>();
+    }
 }
