@@ -16,6 +16,10 @@ import java.util.List;
 public class SummarizerRepository {
     List<Label> summarizers = new ArrayList<>();
 
+    public Label getLabelByName(String name, String variableName) {
+        return summarizers.stream().filter(x -> x.getName().equals(name) & x.getVariableName().equals(variableName)).toList().get(0);
+    }
+
     public boolean add(Label summarizer) {
         return summarizers.add(summarizer);
     }

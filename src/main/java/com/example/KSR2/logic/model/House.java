@@ -1,8 +1,10 @@
 package com.example.KSR2.logic.model;
 
+import com.example.KSR2.logic.model.classicSet.Continuous;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Data
 @Entity(name = "houses")
@@ -50,4 +52,21 @@ public class House {
 
     @Column(name = "LAST_SOLD_TIME")
     private int lastSoldTime;
+
+    public double getValue(String columnName) {
+        return switch (columnName) {
+            case "Cena" -> price;
+            case "Powierzchnia dzialki" -> landArea;
+            case "Powierzchnia mieszkania" -> floorArea;
+            case "Rok wybudowania" -> buildYear;
+            case "Odległosc od centrum" -> cbdDist;
+            case "Odleglosc od najblizszej stacji" -> nearestStationDist;
+            case "Czas od ostatniej sprzedazy" -> lastSoldTime;
+            case "Wysokosc geograficzna" -> latitude;
+            case "Szerokosc geograficzna" -> longitude;
+            case "Odleglosc od szkoly" -> nearestSchoolDist;
+            case "Ranga szkoly" -> nearestSchoolRank;
+            default -> 0;
+        };
+    }
 }

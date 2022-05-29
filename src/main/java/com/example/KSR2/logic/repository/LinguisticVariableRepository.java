@@ -16,6 +16,10 @@ import java.util.List;
 public class LinguisticVariableRepository {
     List<LinguisticVariable> variables = new ArrayList<>();
 
+    public LinguisticVariable getByName(String name) {
+        return variables.stream().filter(x -> x.getName().equals(name)).toList().get(0);
+    }
+
     public boolean add(LinguisticVariable variable) {
         return variables.add(variable);
     }

@@ -20,14 +20,6 @@ public class SummarizerService {
         this.summarizerRepository = summarizerRepository;
     }
 
-    public Label addLabels(List<Label> labels) {
-        Label result = new Label(labels.get(0).getName(), labels.get(0).getSet());
-        for (int i = 1; i < labels.size(); i++) {
-            result = result.addLabel(labels.get(i));
-        }
-        return result;
-    }
-
     public List<Label> getSummarizers() {
         return summarizerRepository.getSummarizers();
     }

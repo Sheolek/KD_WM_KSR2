@@ -25,6 +25,10 @@ public class LinguisticVariable {
         this.labels = new ArrayList<>();
     }
 
+    public Label getLabelByName(String name) {
+        return labels.stream().filter(x -> x.getName().equals(name)).toList().get(0);
+    }
+
     public void addLabel(Label label) {
         labels.add(label);
     }

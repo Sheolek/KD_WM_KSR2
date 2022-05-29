@@ -1,5 +1,6 @@
 package com.example.KSR2.logic.repository;
 
+import com.example.KSR2.logic.model.Label;
 import com.example.KSR2.logic.model.Quantifier;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,10 @@ import java.util.List;
 @Repository
 public class QuantifierRepository {
     List<Quantifier> quantifiers = new ArrayList<>();
+
+    public Quantifier getQuantifierByName(String name) {
+        return quantifiers.stream().filter(x -> x.getLabel().getName().equals(name)).toList().get(0);
+    }
 
     public boolean add(Quantifier quantifier) {
         return quantifiers.add(quantifier);
