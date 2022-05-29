@@ -31,4 +31,9 @@ public class Singleton implements MembershipFunction {
     public Double[] getSupport() {
         return this.ones.toArray(new Double[ones.size()]);
     }
+
+    @Override
+    public double getCardinalNumber() {
+        return 0;
+    }
 }

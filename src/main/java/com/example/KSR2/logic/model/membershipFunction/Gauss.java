@@ -22,4 +22,9 @@ public class Gauss implements MembershipFunction {
     public Double[] getSupport() {
         return new Double[0];
     }
+
+    @Override
+    public double getCardinalNumber() {
+        return 1;
+    }
 }

@@ -35,4 +35,9 @@ public class Trapezoidal implements MembershipFunction {
     public Double[] getSupport() {
         return new Double[]{leftDown, rightDown};
     }
+
+    @Override
+    public double getCardinalNumber() {
+        return ((rightDown - leftDown) + (rightUp - leftUp)) / 2;
+    }
 }

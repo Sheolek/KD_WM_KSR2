@@ -22,4 +22,9 @@ public class Mixed implements MembershipFunction {
     public Double[] getSupport() {
         return new Double[0];
     }
+
+    @Override
+    public double getCardinalNumber() {
+        return function1.getCardinalNumber() * function2.getCardinalNumber();
+    }
 }

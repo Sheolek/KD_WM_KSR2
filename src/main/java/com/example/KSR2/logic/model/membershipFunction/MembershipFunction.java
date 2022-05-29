@@ -3,6 +3,8 @@ package com.example.KSR2.logic.model.membershipFunction;
 public interface MembershipFunction {
     double getMembership(double value);
 
+    double getCardinalNumber();
+
     Double[] getSupport();
 
     default double getNegativeMembership(double value) {

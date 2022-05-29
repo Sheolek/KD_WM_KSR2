@@ -227,7 +227,7 @@ public class MainWindowController implements Initializable {
         for (Quantifier quantifier : quantifiers) {
             for (List<Label> tempQualifiers : qualifiersCombinations) {
                 for (List<Label> tempSummarizers : summarizersCombinations) {
-                    summaryService.createSummary(quantifier, tempQualifiers, tempSummarizers, getWeights());
+                    summaryService.createSummary(quantifier, tempQualifiers, tempSummarizers, getWeights(), houseService.getHouses());
                 }
             }
         }
@@ -340,7 +340,8 @@ public class MainWindowController implements Initializable {
                 Double.parseDouble(t7Weight.getText()),
                 Double.parseDouble(t8Weight.getText()),
                 Double.parseDouble(t9Weight.getText()),
-                Double.parseDouble(t10Weight.getText())
+                Double.parseDouble(t10Weight.getText()),
+                Double.parseDouble(t11Weight.getText())
         };
     }
 }

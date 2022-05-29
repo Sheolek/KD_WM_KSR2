@@ -34,4 +34,9 @@ public class Triangular implements MembershipFunction {
     public Double[] getSupport() {
         return new Double[]{left, right};
     }
+
+    @Override
+    public double getCardinalNumber() {
+        return (right - left) / 2;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.KSR2.logic.service;
 
+import com.example.KSR2.logic.model.House;
 import com.example.KSR2.logic.model.Label;
 import com.example.KSR2.logic.model.Quantifier;
 import com.example.KSR2.logic.model.Summary;
@@ -32,7 +33,7 @@ public class SummaryService {
         summaryRepository.reset();
     }
 
-    public void createSummary(Quantifier quantifier, List<Label> qualifiers, List<Label> summarizers, double[] weights) {
+    public void createSummary(Quantifier quantifier, List<Label> qualifiers, List<Label> summarizers, double[] weights, List<House> houses) {
         Summary summary = new Summary();
         summary.setQuantifier(quantifier);
         for (Label qualifier:qualifiers) {
@@ -41,7 +42,7 @@ public class SummaryService {
         for (Label summarizer:summarizers) {
             summary.addSummarizer(summarizer);
         }
-        summary.calculateMeasures(weights);
+        summary.calculateMeasures(weights, houses);
         summaryRepository.add(summary);
     }
 }
