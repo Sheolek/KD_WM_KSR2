@@ -225,11 +225,18 @@ public class MainWindowController implements Initializable {
 
         double[] weights = getWeights();
         for (Quantifier quantifier : quantifiers) {
-            for (List<Label> tempQualifiers : qualifiersCombinations) {
+            if (quantifier.getIsRelative()) {
+                for (List<Label> tempQualifiers : qualifiersCombinations) {
+                    for (List<Label> tempSummarizers : summarizersCombinations) {
+                        summaryService.createSummary(quantifier, tempQualifiers, tempSummarizers, weights, houseService.getHouses());
+                    }
+                }
+            } else {
                 for (List<Label> tempSummarizers : summarizersCombinations) {
-                    summaryService.createSummary(quantifier, tempQualifiers, tempSummarizers, getWeights(), houseService.getHouses());
+                    summaryService.createSummary(quantifier, new ArrayList<Label>(), tempSummarizers, weights, houseService.getHouses());
                 }
             }
+
         }
 
         fillSummaryTable();

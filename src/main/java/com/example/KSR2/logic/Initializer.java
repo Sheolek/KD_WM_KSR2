@@ -117,10 +117,17 @@ public class Initializer {
     private void initializeQuantifiers() {
         quantifiersVariable.add(new LinguisticVariable("Względne", new Continuous(Arrays.asList(new Double[][]{{0d, 1d}}))));
         quantifiersVariable.add(new LinguisticVariable("Bezwględne", new Continuous(Arrays.asList(new Double[][]{{0d, 19760d}}))));
+        //wzgledne
         quantifiers.add(new Quantifier(new Label("Mniej niż ćwirć domów", quantifiersVariable.get(0), new Trapezoidal(0,0,0.04,0.25)),Boolean.TRUE));
         quantifiers.add(new Quantifier(new Label("Mniej niż połowa domów", quantifiersVariable.get(0), new Trapezoidal(0.12,0.2,0.32,0.5)),Boolean.TRUE));
         quantifiers.add(new Quantifier(new Label("Około połowy domów", quantifiersVariable.get(0), new Trapezoidal(0.32,0.44,0.56,0.68)),Boolean.TRUE));
         quantifiers.add(new Quantifier(new Label("Większość domów", quantifiersVariable.get(0), new Trapezoidal(0.6,0.68,0.84,0.88)),Boolean.TRUE));
         quantifiers.add(new Quantifier(new Label("Prawie każdy z domów", quantifiersVariable.get(0), new Trapezoidal(0.84,0.92,1,1)),Boolean.TRUE));
+
+        //bezwzgledne
+        quantifiers.add(new Quantifier(new Label("Mniej niż 3000 domów", quantifiersVariable.get(1), new Trapezoidal(0,0,3600,6200)),Boolean.FALSE));
+        quantifiers.add(new Quantifier(new Label("Około 7500 domów", quantifiersVariable.get(1), new Triangular(4900,7500,10100)),Boolean.FALSE));
+        quantifiers.add(new Quantifier(new Label("Blisko 11000 z domów", quantifiersVariable.get(1), new Triangular(8800,11400,14000)),Boolean.FALSE));
+        quantifiers.add(new Quantifier(new Label("Ponad 13000 domów", quantifiersVariable.get(1), new Trapezoidal(12700,15300,19208,19208)),Boolean.FALSE));
     }
 }
