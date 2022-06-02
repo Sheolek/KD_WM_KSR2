@@ -1,6 +1,7 @@
 package com.example.KSR2.view.controller;
 
 import com.example.KSR2.logic.Initializer;
+import com.example.KSR2.logic.Summary2TableRecord;
 import com.example.KSR2.logic.SummaryTableRecord;
 import com.example.KSR2.logic.model.Label;
 import com.example.KSR2.logic.model.*;
@@ -30,12 +31,11 @@ public class MainWindowController implements Initializable {
     private final QuantifierService quantifierService;
     private final SummarizerService summarizerService;
     private final SummaryService summaryService;
+    private final Summary2Service summary2Service;
     private List<LinguisticVariable> quantifierVariable;
 
     @FXML
     public AnchorPane listAnchorPane;
-
-    @FXML
     public TableView<House> houseTable;
     public TreeView<String> quantifiersTree;
     public TreeView<String> qualifiersTree;
@@ -56,28 +56,40 @@ public class MainWindowController implements Initializable {
     public Tab summary1results;
     public TableView<SummaryTableRecord> houseTable1;
 
+    // 2 podmioty
+    @FXML
+    public TreeView<String> quantifiersTree2;
+    public TreeView<String> qualifiersTree2;
+    public TreeView<String> summarizersTree2;
+    public TableView<Summary2TableRecord> houseTable2;
+    public Button generateButton2;
+    public Button resetButton2;
+
     @Autowired
     public MainWindowController(HouseService houseService, LinguisticVariableService linguisticVariableService,
                                 QuantifierService quantifierService, SummarizerService summarizerService,
-                                SummaryService summaryService) {
+                                SummaryService summaryService, Summary2Service summary2Service) {
 
         this.houseService = houseService;
         this.linguisticVariableService = linguisticVariableService;
         this.quantifierService = quantifierService;
         this.summarizerService = summarizerService;
         this.summaryService = summaryService;
+        this.summary2Service = summary2Service;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeHouseTable();
         initializeSummaryTable();
+        initializeSummaryTable2();
         Initializer initializer = new Initializer();
         linguisticVariableService.getLinguisticVariableRepository().setVariables(initializer.getVariables());
         quantifierService.getQuantifierRepository().setQuantifiers(initializer.getQuantifiers());
         summarizerService.getSummarizerRepository().setSummarizers(initializer.getSummarizers());
         quantifierVariable = initializer.getQuantifiersVariable();
         initializeTrees();
+        initializeTrees2();
     }
 
     private void initializeHouseTable() {
@@ -86,32 +98,34 @@ public class MainWindowController implements Initializable {
         TableColumn<House, String> col0 = new TableColumn<>("ID");
         TableColumn<House, String> col1 = new TableColumn<>("ADDRESS");
         TableColumn<House, String> col2 = new TableColumn<>("SUBURB");
-        TableColumn<House, String> col3 = new TableColumn<>("PRICE");
-        TableColumn<House, String> col4 = new TableColumn<>("LAND_AREA");
-        TableColumn<House, String> col5 = new TableColumn<>("FLOOR_AREA");
-        TableColumn<House, String> col6 = new TableColumn<>("BUILD_YEAR");
-        TableColumn<House, String> col7 = new TableColumn<>("CBD_DIST");
-        TableColumn<House, String> col8 = new TableColumn<>("NEAREST_STN_DIST");
-        TableColumn<House, String> col9 = new TableColumn<>("LATITUDE");
-        TableColumn<House, String> col10 = new TableColumn<>("LONGITUDE");
-        TableColumn<House, String> col11 = new TableColumn<>("NEAREST_SCH_DIST");
-        TableColumn<House, String> col12 = new TableColumn<>("NEAREST_SCH_RANK");
-        TableColumn<House, String> col13 = new TableColumn<>("LAST_SOLD_TIME");
+        TableColumn<House, String> col3 = new TableColumn<>("BEDROOMS");
+        TableColumn<House, String> col4 = new TableColumn<>("PRICE");
+        TableColumn<House, String> col5 = new TableColumn<>("LAND_AREA");
+        TableColumn<House, String> col6 = new TableColumn<>("FLOOR_AREA");
+        TableColumn<House, String> col7 = new TableColumn<>("BUILD_YEAR");
+        TableColumn<House, String> col8 = new TableColumn<>("CBD_DIST");
+        TableColumn<House, String> col9 = new TableColumn<>("NEAREST_STN_DIST");
+        TableColumn<House, String> col10 = new TableColumn<>("LATITUDE");
+        TableColumn<House, String> col11 = new TableColumn<>("LONGITUDE");
+        TableColumn<House, String> col12 = new TableColumn<>("NEAREST_SCH_DIST");
+        TableColumn<House, String> col13 = new TableColumn<>("NEAREST_SCH_RANK");
+        TableColumn<House, String> col14 = new TableColumn<>("LAST_SOLD_TIME");
 
         col0.setCellValueFactory(new PropertyValueFactory<>("id"));
         col1.setCellValueFactory(new PropertyValueFactory<>("address"));
         col2.setCellValueFactory(new PropertyValueFactory<>("suburb"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("price"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("landArea"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("floorArea"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("buildYear"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("cbdDist"));
-        col8.setCellValueFactory(new PropertyValueFactory<>("nearestStationDist"));
-        col9.setCellValueFactory(new PropertyValueFactory<>("latitude"));
-        col10.setCellValueFactory(new PropertyValueFactory<>("longitude"));
-        col11.setCellValueFactory(new PropertyValueFactory<>("nearestSchoolDist"));
-        col12.setCellValueFactory(new PropertyValueFactory<>("nearestSchoolRank"));
-        col13.setCellValueFactory(new PropertyValueFactory<>("lastSoldTime"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("bedrooms"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("price"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("landArea"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("floorArea"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("buildYear"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("cbdDist"));
+        col9.setCellValueFactory(new PropertyValueFactory<>("nearestStationDist"));
+        col10.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+        col11.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+        col12.setCellValueFactory(new PropertyValueFactory<>("nearestSchoolDist"));
+        col13.setCellValueFactory(new PropertyValueFactory<>("nearestSchoolRank"));
+        col14.setCellValueFactory(new PropertyValueFactory<>("lastSoldTime"));
 
         houseTable.getColumns().add(col0);
         houseTable.getColumns().add(col1);
@@ -127,6 +141,7 @@ public class MainWindowController implements Initializable {
         houseTable.getColumns().add(col11);
         houseTable.getColumns().add(col12);
         houseTable.getColumns().add(col13);
+        houseTable.getColumns().add(col14);
 
         for (House house : houses) {
             houseTable.getItems().add(house);
@@ -351,4 +366,127 @@ public class MainWindowController implements Initializable {
                 Double.parseDouble(t11Weight.getText())
         };
     }
+
+
+    // 2 podmiotowe
+    private void initializeTrees2() {
+        CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Kwalifikatory");
+        for (LinguisticVariable variable : linguisticVariableService.getVariables()) {
+            CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(variable.getName());
+            variableItem.setExpanded(true);
+            for (Label label : variable.getLabels()) {
+                CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+                variableItem.getChildren().add(labelItem);
+            }
+            root.getChildren().add(variableItem);
+        }
+        qualifiersTree2.setRoot(root);
+        qualifiersTree2.setCellFactory(CheckBoxTreeCell.forTreeView());
+
+        root = new CheckBoxTreeItem<>("Sumaryzatory");
+        for (LinguisticVariable variable : linguisticVariableService.getVariables()) {
+            CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(variable.getName());
+            variableItem.setExpanded(true);
+            for (Label label : variable.getLabels()) {
+                CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+                variableItem.getChildren().add(labelItem);
+            }
+            root.getChildren().add(variableItem);
+        }
+        summarizersTree2.setRoot(root);
+        summarizersTree2.setCellFactory(CheckBoxTreeCell.forTreeView());
+
+        root = new CheckBoxTreeItem<>("Kwantyfikatory");
+        CheckBoxTreeItem<String> variableItem = new CheckBoxTreeItem<>(quantifierVariable.get(0).getName());
+        variableItem.setExpanded(true);
+        for (Label label : quantifierVariable.get(0).getLabels()) {
+            CheckBoxTreeItem<String> labelItem = new CheckBoxTreeItem<>(label.getName());
+            variableItem.getChildren().add(labelItem);
+        }
+        root.getChildren().add(variableItem);
+        quantifiersTree2.setRoot(root);
+        quantifiersTree2.setCellFactory(CheckBoxTreeCell.forTreeView());
+    }
+
+    public void generateSummaries2(ActionEvent actionEvent) {
+        List<String> checkedQualifiers = new ArrayList<>();
+        List<String> checkedSummarizers = new ArrayList<>();
+        List<String> checkedQuantifiers = new ArrayList<>();
+        findCheckedItems((CheckBoxTreeItem<?>) qualifiersTree2.getRoot(), checkedQualifiers);
+        findCheckedItems((CheckBoxTreeItem<?>) summarizersTree2.getRoot(), checkedSummarizers);
+        findCheckedItems((CheckBoxTreeItem<?>) quantifiersTree2.getRoot(), checkedQuantifiers);
+
+        List<Label> summarizers = new ArrayList<>();
+        List<Label> qualifiers = new ArrayList<>();
+        List<Quantifier> quantifiers = new ArrayList<>();
+
+        for (String checkedSummarizer : checkedSummarizers) {
+            String[] names = checkedSummarizer.split(";");
+            summarizers.add(summarizerService.getSummarizerRepository().getLabelByName(names[1], names[0]));
+        }
+
+        for (String checkedQualifier : checkedQualifiers) {
+            String[] names = checkedQualifier.split(";");
+            qualifiers.add(summarizerService.getSummarizerRepository().getLabelByName(names[1], names[0]));
+        }
+
+        for (String checkedQuantifier : checkedQuantifiers) {
+            String[] names = checkedQuantifier.split(";");
+            quantifiers.add(quantifierService.getQuantifierRepository().getQuantifierByName(names[1]));
+        }
+
+        List<List<Label>> summarizersCombinations = new ArrayList<>();
+        for (int i = 1; i <= summarizers.size(); i++) {
+            combinations(summarizers, i, 0, Arrays.asList(new Label[i]), summarizersCombinations);
+        }
+
+        List<List<Label>> qualifiersCombinations = new ArrayList<>();
+        for (int i = 0; i <= qualifiers.size(); i++) {
+            combinations(qualifiers, i, 0, Arrays.asList(new Label[i]), qualifiersCombinations);
+        }
+
+        List<House> obj1 = houseService.getHouses().stream().filter(x -> x.getBedrooms() <= 3).toList();
+        List<House> obj2 = houseService.getHouses().stream().filter(x -> x.getBedrooms() > 3).toList();
+        for (List<Label> tempSummarizers : summarizersCombinations) {
+            for (Quantifier quantifier : quantifiers) {
+                for (List<Label> tempQualifiers : qualifiersCombinations) {
+                    if (!tempSummarizers.isEmpty()) {
+                        summary2Service.createSummary(quantifier, new ArrayList<Label>(), tempQualifiers, tempSummarizers, obj1, obj2);
+                        summary2Service.createSummary(quantifier, new ArrayList<Label>(), tempQualifiers, tempSummarizers, obj2, obj1);
+                    }
+                    summary2Service.createSummary(quantifier, tempQualifiers, new ArrayList<Label>(), tempSummarizers, obj1, obj2);
+                    summary2Service.createSummary(quantifier, tempQualifiers, new ArrayList<Label>(), tempSummarizers, obj2, obj1);
+                }
+            }
+            summary2Service.createSummary(null, new ArrayList<Label>(), new ArrayList<Label>(), tempSummarizers, obj1, obj2);
+            summary2Service.createSummary(null, new ArrayList<Label>(), new ArrayList<Label>(), tempSummarizers, obj2, obj1);
+        }
+
+        fillSummaryTable2();
+    }
+
+    public void resetSummaries2(ActionEvent actionEvent) {
+        summary2Service.reset();
+        houseTable2.getItems().clear();
+    }
+
+    public void fillSummaryTable2() {
+        List<Summary2> summaries = summary2Service.getSummaries();
+
+        for (Summary2 summary : summaries) {
+            houseTable2.getItems().add(new Summary2TableRecord(summary));
+        }
+    }
+
+    public void initializeSummaryTable2() {
+        TableColumn<Summary2TableRecord, String> col0 = new TableColumn<>("Podsumowanie");
+        TableColumn<Summary2TableRecord, String> col1 = new TableColumn<>("T");
+
+        col0.setCellValueFactory(new PropertyValueFactory<>("Summary2"));
+        col1.setCellValueFactory(new PropertyValueFactory<>("T"));
+
+        houseTable2.getColumns().add(col0);
+        houseTable2.getColumns().add(col1);
+    }
+
 }

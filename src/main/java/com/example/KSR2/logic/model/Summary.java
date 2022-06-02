@@ -22,12 +22,12 @@ public class Summary {
         measures.calculateMeasures(this, weights);
     }
 
-    public boolean addSummarizer(Label summarizer) {
-        return summarizers.add(summarizer);
+    public void addSummarizer(Label summarizer) {
+        summarizers.add(summarizer);
     }
 
-    public boolean addQualifier(Label qualifier) {
-        return qualifiers.add(qualifier);
+    public void addQualifier(Label qualifier) {
+        qualifiers.add(qualifier);
     }
 
     public boolean removeSummarizer(Label summarizer) {
@@ -51,17 +51,17 @@ public class Summary {
         final StringBuilder sb = new StringBuilder();
         sb.append(quantifier.getLabel().getName());
         if (qualifiers.size() > 0) {
-            sb.append(" które są ");
+            sb.append(" które są/mają ");
             for (int i = 0; i < qualifiers.size(); i++) {
-                sb.append(qualifiers.get(i).getName() + " "  + qualifiers.get(i).getVariableName());
+                sb.append(qualifiers.get(i).getName()).append(" ").append(qualifiers.get(i).getVariableName());
                 if (i != qualifiers.size() -1) {
                     sb.append(" i ");
                 }
             }
         }
-        sb.append(" jest ");
+        sb.append(" jest/ma ");
         for (int i = 0; i < summarizers.size(); i++) {
-            sb.append(summarizers.get(i).getName() + " " + summarizers.get(i).getVariableName());
+            sb.append(summarizers.get(i).getName()).append(" ").append(summarizers.get(i).getVariableName());
             if (i != summarizers.size() -1) {
                 sb.append(" i ");
             }

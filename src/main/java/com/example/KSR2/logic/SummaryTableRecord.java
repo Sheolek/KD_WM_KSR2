@@ -1,5 +1,6 @@
 package com.example.KSR2.logic;
 
+import com.example.KSR2.logic.model.Summary;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,4 +20,8 @@ public class SummaryTableRecord {
     private double T9;
     private double T10;
     private double T11;
+
+    public SummaryTableRecord(Summary summary) {
+
+    }
 }

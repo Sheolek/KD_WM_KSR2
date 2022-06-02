@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Arrays;
 
 @Data
-@Entity(name = "houses")
+@Entity(name = "houses2")
 public class House {
 
     @Id
@@ -22,6 +22,9 @@ public class House {
 
     @Column(name = "PRICE")
     private int price;
+
+    @Column(name = "BEDROOMS")
+    private int bedrooms;
 
     @Column(name = "LAND_AREA")
     private int landArea;
