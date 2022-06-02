@@ -42,7 +42,8 @@ public class SummaryService {
         for (Label summarizer:summarizers) {
             summary.addSummarizer(summarizer);
         }
-        summary.calculateMeasures(weights, houses);
+        summary.setObjects(houses);
+        summary.calculateMeasures(weights);
         summaryRepository.add(summary);
     }
 }

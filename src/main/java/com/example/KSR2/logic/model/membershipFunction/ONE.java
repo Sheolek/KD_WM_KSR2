@@ -7,8 +7,8 @@ public class ONE implements MembershipFunction{
     }
 
     @Override
-    public Double[] getSupport() {
-        return new Double[0];
+    public double getSupport() {
+        return 1;
     }
 
     @Override

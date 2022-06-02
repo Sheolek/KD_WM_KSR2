@@ -31,8 +31,8 @@ public class Triangular implements MembershipFunction {
     }
 
     @Override
-    public Double[] getSupport() {
-        return new Double[]{left, right};
+    public double getSupport() {
+        return right - left;
     }
 
     @Override

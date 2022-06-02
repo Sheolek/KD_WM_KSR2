@@ -32,8 +32,8 @@ public class Trapezoidal implements MembershipFunction {
     }
 
     @Override
-    public Double[] getSupport() {
-        return new Double[]{leftDown, rightDown};
+    public double getSupport() {
+        return rightDown - leftDown;
     }
 
     @Override

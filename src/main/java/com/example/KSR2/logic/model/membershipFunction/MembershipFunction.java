@@ -5,7 +5,7 @@ public interface MembershipFunction {
 
     double getCardinalNumber();
 
-    Double[] getSupport();
+    double getSupport();
 
     default double getNegativeMembership(double value) {
         return 1 - getMembership(value);

@@ -28,8 +28,8 @@ public class Singleton implements MembershipFunction {
     }
 
     @Override
-    public Double[] getSupport() {
-        return this.ones.toArray(new Double[ones.size()]);
+    public double getSupport() {
+        return ones.size();
     }
 
     @Override

@@ -19,8 +19,8 @@ public class Mixed implements MembershipFunction {
     }
 
     @Override
-    public Double[] getSupport() {
-        return new Double[0];
+    public double getSupport() {
+        return function1.getSupport() + function2.getSupport();
     }
 
     @Override

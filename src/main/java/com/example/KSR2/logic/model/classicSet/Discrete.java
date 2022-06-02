@@ -20,6 +20,11 @@ public class Discrete implements ClassicSet {
     }
 
     @Override
+    public double getSize() {
+        return values.size();
+    }
+
+    @Override
     public ClassicSet add(ClassicSet set) {
         Discrete discrete = (Discrete) set;
         List<Double> discreteValues = discrete.getValues();

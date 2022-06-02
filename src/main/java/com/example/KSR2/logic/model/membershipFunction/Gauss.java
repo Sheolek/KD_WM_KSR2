@@ -19,8 +19,8 @@ public class Gauss implements MembershipFunction {
     }
 
     @Override
-    public Double[] getSupport() {
-        return new Double[0];
+    public double getSupport() {
+        return stdev*2*1.2;
     }
 
     @Override

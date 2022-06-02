@@ -25,6 +25,11 @@ public class Continuous implements ClassicSet {
     }
 
     @Override
+    public double getSize() {
+        return values.get(0)[1] - values.get(0)[0];
+    }
+
+    @Override
     public ClassicSet add(ClassicSet set) {
         Continuous continuous = (Continuous) set;
         List<Double[]> continuousValues = continuous.getValues();
