@@ -63,6 +63,11 @@ public class Summary2TableRecord {
                 builder.append(" i ");
             }
         }
+        this.T = round(T);
         this.summary2 = builder.toString();
+    }
+
+    private double round(double val) {
+        return Math.round(val * 100.0) / 100.0;
     }
 }

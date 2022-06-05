@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @NoArgsConstructor
@@ -149,11 +150,11 @@ public class Measures {
                 qualifierMembership.add(membership);
             }
 
-            Double temp = summarizerMembership.stream().sorted().toList().get(0);
+            Double temp = Collections.min(summarizerMembership);
             Double temp2 = 1d;
 
             if (numOfQualifiers > 0) {
-                temp2 = qualifierMembership.stream().sorted().toList().get(0);
+                temp2 = Collections.min(qualifierMembership);
             }
 
             double membership = Math.min(temp, temp2);
