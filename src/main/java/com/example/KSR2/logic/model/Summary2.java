@@ -24,12 +24,30 @@ public class Summary2 {
     private double T;
 
     public void calculateT() {
+        List<House> all = Stream.concat(objects1.stream(),objects2.stream()).toList();
         double obj1Mem = getSigmaCount(objects1,summarizers);
         double obj2Mem = getSigmaCount(objects2,summarizers);
         int m1 = objects1.size();
         int m2 = objects2.size();
         if (quantifier == null) {
-            this.T = 1 - implicationLukasiewicz(obj2Mem/m2, obj1Mem/m1);
+            double sum = 0;
+            for (House house:all) {
+                double mem1 = 0;
+                double mem2 = 0;
+                List<Double> summarizerMembership = new ArrayList<>();
+                for (Label label : summarizers) {
+                    double membership = label.getMembership(house.getValue(label.getVariableName()));
+                    summarizerMembership.add(membership);
+                }
+                double membership = Collections.min(summarizerMembership);
+                if (objects1.contains(house)) {
+                    sum += implicationLukasiewicz(0,membership);
+                }
+                if (objects2.contains(house)) {
+                    sum += implicationLukasiewicz(membership,0);
+                }
+            }
+            this.T = 1 - sum/all.size();
         } else {
             if (qualifiers1.size() > 0) {
                 double obj1MemWQual = getSigmaCount(objects1, Stream.concat(qualifiers1.stream(),summarizers.stream()).toList());
@@ -50,9 +68,7 @@ public class Summary2 {
         double sum = 0;
         for (House house: objects) {
             List<Double> summarizerMembership = new ArrayList<>();
-
-            for (int i = 0; i < labels.size(); i++) {
-                Label label = labels.get(i);
+            for (Label label : labels) {
                 double membership = label.getMembership(house.getValue(label.getVariableName()));
                 summarizerMembership.add(membership);
             }
