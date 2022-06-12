@@ -5,6 +5,10 @@ public interface ClassicSet {
 
     double getSize();
 
+    double getBottom();
+
+    double getTop();
+
     ClassicSet add(ClassicSet set);
 
     ClassicSet getProduct(ClassicSet set);

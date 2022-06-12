@@ -5,14 +5,23 @@ import com.example.KSR2.logic.Summary2TableRecord;
 import com.example.KSR2.logic.SummaryTableRecord;
 import com.example.KSR2.logic.model.Label;
 import com.example.KSR2.logic.model.*;
+import com.example.KSR2.logic.model.membershipFunction.Gauss;
+import com.example.KSR2.logic.model.membershipFunction.Trapezoidal;
+import com.example.KSR2.logic.model.membershipFunction.Triangular;
 import com.example.KSR2.logic.service.*;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +33,6 @@ import java.util.ResourceBundle;
 
 @Component
 public class MainWindowController implements Initializable {
-
 
     private final HouseService houseService;
     private final LinguisticVariableService linguisticVariableService;
@@ -65,6 +73,26 @@ public class MainWindowController implements Initializable {
     public Button generateButton2;
     public Button resetButton2;
 
+    // zaawansowane generowanie
+    @FXML
+    public TextField nameArg;
+    public TextField arg1;
+    public TextField arg2;
+    public TextField arg3;
+    public TextField arg4;
+    public javafx.scene.control.Label arg1txt;
+    public javafx.scene.control.Label arg2txt;
+    public javafx.scene.control.Label arg3txt;
+    public javafx.scene.control.Label arg4txt;
+    public ChoiceBox<String> chooseType;
+    public ChoiceBox<String> chooseVariable;
+    public ChoiceBox<String> chooseFuncType;
+    public Button createPreview;
+    public Button createLabel;
+    public StackPane stackPane;
+    public LineChart<Number, Number> chart;
+    public XYChart.Series<Number, Number> series;
+
     @Autowired
     public MainWindowController(HouseService houseService, LinguisticVariableService linguisticVariableService,
                                 QuantifierService quantifierService, SummarizerService summarizerService,
@@ -90,6 +118,7 @@ public class MainWindowController implements Initializable {
         quantifierVariable = initializer.getQuantifiersVariable();
         initializeTrees();
         initializeTrees2();
+        initializeGenLists();
     }
 
     private void initializeHouseTable() {
@@ -229,12 +258,12 @@ public class MainWindowController implements Initializable {
         }
 
         List<List<Label>> summarizersCombinations = new ArrayList<>();
-        for (int i = 1; i <= summarizers.size(); i++) {
+        for (int i = 1; i <= summarizers.size() || i <= 3; i++) {
             combinations(summarizers, i, 0, Arrays.asList(new Label[i]), summarizersCombinations);
         }
 
         List<List<Label>> qualifiersCombinations = new ArrayList<>();
-        for (int i = 0; i <= qualifiers.size(); i++) {
+        for (int i = 0; i <= qualifiers.size() || i <= 3; i++) {
             combinations(qualifiers, i, 0, Arrays.asList(new Label[i]), qualifiersCombinations);
         }
 
@@ -436,12 +465,12 @@ public class MainWindowController implements Initializable {
         }
 
         List<List<Label>> summarizersCombinations = new ArrayList<>();
-        for (int i = 1; i <= summarizers.size(); i++) {
+        for (int i = 1; i <= summarizers.size() || i <= 1; i++) {
             combinations(summarizers, i, 0, Arrays.asList(new Label[i]), summarizersCombinations);
         }
 
         List<List<Label>> qualifiersCombinations = new ArrayList<>();
-        for (int i = 0; i <= qualifiers.size(); i++) {
+        for (int i = 0; i <= qualifiers.size() || i <= 3; i++) {
             combinations(qualifiers, i, 0, Arrays.asList(new Label[i]), qualifiersCombinations);
         }
 
@@ -489,4 +518,239 @@ public class MainWindowController implements Initializable {
         houseTable2.getColumns().add(col1);
     }
 
+    // generating
+    public void initializeGenLists() {
+        chooseType.getItems().add("Kwantyfikator");
+        chooseType.getItems().add("Summaryzator");
+        chooseType.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
+            if (t1.equals("Kwantyfikator")) {
+                List<String> names = quantifierVariable.stream().map(LinguisticVariable::getName).toList();
+                chooseVariable.setItems(FXCollections.observableList(names));
+            }
+            if (t1.equals("Summaryzator")) {
+                List<String> names = linguisticVariableService.getVariables().stream().map(LinguisticVariable::getName).toList();
+                chooseVariable.setItems(FXCollections.observableList(names));
+            }
+        });
+        chooseFuncType.getItems().add("Trapezoidalna");
+        chooseFuncType.getItems().add("Trójkątna");
+        chooseFuncType.getItems().add("Gaussowska");
+        chooseFuncType.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
+            switch (t1) {
+                case "Trapezoidalna" -> {
+                    arg1.setDisable(false);
+                    arg2.setDisable(false);
+                    arg3.setDisable(false);
+                    arg4.setDisable(false);
+                    arg1txt.setText("Lewa krawędź:");
+                    arg2txt.setText("Lewa granica 1:");
+                    arg3txt.setText("Prawa granica 1:");
+                    arg4txt.setText("Prawa krawędź:");
+                }
+                case "Trójkątna" -> {
+                    arg1.setDisable(false);
+                    arg2.setDisable(false);
+                    arg3.setDisable(false);
+                    arg4.setDisable(true);
+                    arg1txt.setText("Lewa krawędź:");
+                    arg2txt.setText("Czubek:");
+                    arg3txt.setText("Prawa granica:");
+                    arg4txt.setText("Argument 4:");
+                }
+                case "Gaussowska" -> {
+                    arg1.setDisable(false);
+                    arg2.setDisable(false);
+                    arg3.setDisable(true);
+                    arg4.setDisable(true);
+                    arg1txt.setText("Szerokość dzwona:");
+                    arg2txt.setText("Czubek:");
+                    arg3txt.setText("Argument 3:");
+                    arg4txt.setText("Argument 4:");
+                }
+            }
+        });
+        arg1.setDisable(true);
+        arg2.setDisable(true);
+        arg3.setDisable(true);
+        arg4.setDisable(true);
+    }
+
+
+    public void createPreview(ActionEvent actionEvent) {
+        String funcType = chooseFuncType.getValue();
+        String variableName = chooseVariable.getValue();
+        List<LinguisticVariable> variables = linguisticVariableService.getVariables();
+        double min = 0;
+        double max = 1;
+        if (variableName.equals("Względne")) {
+            min = 0;
+            max = 1;
+        } else if (variableName.equals("Bezwględne")) {
+            min = 0;
+            max = houseService.getHouses().size();
+        } else {
+            for (LinguisticVariable variable : variables) {
+                if (variable.getName().equals(variableName)) {
+                    min = variable.getUniverse().getBottom();
+                    max = variable.getUniverse().getTop();
+                    break;
+                }
+            }
+        }
+        NumberAxis x = new NumberAxis();
+        NumberAxis y = new NumberAxis();
+        chart = new LineChart<>(x, y);
+        chart.setTitle("Wykres funkcji przynależności");
+        x.setLabel(variableName);
+        series = new XYChart.Series<>();
+        series.setName("Funkcja " + funcType);
+        switch (funcType) {
+            case "Trapezoidalna" -> {
+                double a = Double.parseDouble(arg1.getText());
+                double b = Double.parseDouble(arg2.getText());
+                double c = Double.parseDouble(arg3.getText());
+                double d = Double.parseDouble(arg4.getText());
+                series.getData().add(new XYChart.Data<>(fit(min, max, a), 0));
+                series.getData().add(new XYChart.Data<>(fit(min, max, b), 1));
+                series.getData().add(new XYChart.Data<>(fit(min, max, c), 1));
+                series.getData().add(new XYChart.Data<>(fit(min, max, d), 0));
+            }
+            case "Trójkątna" -> {
+                double a = Double.parseDouble(arg1.getText());
+                double b = Double.parseDouble(arg2.getText());
+                double c = Double.parseDouble(arg3.getText());
+                series.getData().add(new XYChart.Data<>(fit(min, max, a), 0));
+                series.getData().add(new XYChart.Data<>(fit(min, max, b), 1));
+                series.getData().add(new XYChart.Data<>(fit(min, max, c), 0));
+            }
+            case "Gaussowska" -> {
+                double a = Double.parseDouble(arg1.getText());
+                double b = Double.parseDouble(arg2.getText());
+                chart.setCreateSymbols(false);
+                double x1 = min;
+                boolean flag = false;
+                boolean loop = true;
+                double step;
+                if (max <= 1) {
+                    step = 0.001;
+                } else if (max <= 10) {
+                    step = 0.01;
+                } else if (max <= 100) {
+                    step = 0.1;
+                } else {
+                    step = 1;
+                }
+                while (loop) {
+                    double val = round(gauss(x1, a, b));
+                    if (val > 0) {
+                        series.getData().add(new XYChart.Data<>(x1, val));
+                        flag = true;
+                    }
+                    if ((val == 0.0 && flag) || x1 >= max) {
+                        loop = false;
+                    }
+                    x1 += step;
+                }
+            }
+        }
+        chart.getData().add(series);
+        stackPane.getChildren().clear();
+        stackPane.getChildren().add(chart);
+        StackPane.setAlignment(chart, Pos.CENTER);
+    }
+
+    public void createLabel(ActionEvent actionEvent) {
+        String type = chooseType.getValue();
+        String funcType = chooseFuncType.getValue();
+        String variableName = chooseVariable.getValue();
+        List<LinguisticVariable> variables = linguisticVariableService.getVariables();
+        double min = 0;
+        double max = 1;
+        if (type.equals("Kwantyfikator")) {
+            LinguisticVariable quantifierType = quantifierVariable.get(0);
+            if (variableName.equals("Względne")) {
+                min = 0;
+                max = 1;
+                quantifierType = quantifierVariable.get(0);
+            } else if (variableName.equals("Bezwględne")) {
+                min = 0;
+                max = houseService.getHouses().size();
+                quantifierType = quantifierVariable.get(1);
+            }
+            switch (funcType) {
+                case "Trapezoidalna" -> quantifierService.getQuantifierRepository().add(new Quantifier(
+                        new Label(nameArg.getText() + " domów", quantifierType, new Trapezoidal(
+                                fit(min, max, Double.parseDouble(arg1.getText())),
+                                fit(min, max, Double.parseDouble(arg2.getText())),
+                                fit(min, max, Double.parseDouble(arg3.getText())),
+                                fit(min, max, Double.parseDouble(arg4.getText()))
+                        ))
+                        , Boolean.TRUE));
+                case "Trójkątna" -> quantifierService.getQuantifierRepository().add(new Quantifier(
+                        new Label(nameArg.getText() + " domów", quantifierType, new Triangular(
+                                fit(min, max, Double.parseDouble(arg1.getText())),
+                                fit(min, max, Double.parseDouble(arg2.getText())),
+                                fit(min, max, Double.parseDouble(arg3.getText()))
+                        ))
+                        , Boolean.TRUE));
+                case "Gaussowska" -> quantifierService.getQuantifierRepository().add(new Quantifier(
+                        new Label(nameArg.getText() + " domów", quantifierType, new Gauss(
+                                Double.parseDouble(arg2.getText()),
+                                Double.parseDouble(arg1.getText())
+                        ))
+                        , Boolean.TRUE));
+            }
+        } else if (type.equals("Summaryzator")) {
+            LinguisticVariable summarizerType = variables.get(0);
+
+            for (LinguisticVariable variable : variables) {
+                if (variable.getName().equals(variableName)) {
+                    min = variable.getUniverse().getBottom();
+                    max = variable.getUniverse().getTop();
+                    summarizerType = variable;
+                    break;
+                }
+            }
+            switch (funcType) {
+                case "Trapezoidalna" -> summarizerService.getSummarizerRepository().add(new Label(nameArg.getText(), summarizerType,
+                        new Trapezoidal(
+                                fit(min, max, Double.parseDouble(arg1.getText())),
+                                fit(min, max, Double.parseDouble(arg2.getText())),
+                                fit(min, max, Double.parseDouble(arg3.getText())),
+                                fit(min, max, Double.parseDouble(arg4.getText()))
+                        )));
+                case "Trójkątna" -> summarizerService.getSummarizerRepository().add(new Label(nameArg.getText(), summarizerType,
+                        new Triangular(
+                                fit(min, max, Double.parseDouble(arg1.getText())),
+                                fit(min, max, Double.parseDouble(arg2.getText())),
+                                fit(min, max, Double.parseDouble(arg3.getText()))
+                        )));
+                case "Gaussowska" -> summarizerService.getSummarizerRepository().add(new Label(nameArg.getText(), summarizerType,
+                        new Gauss(
+                                Double.parseDouble(arg2.getText()),
+                                Double.parseDouble(arg1.getText())
+                        )));
+            }
+        }
+        initializeTrees();
+        initializeTrees2();
+    }
+
+    private double fit(double min, double max, double fit) {
+        if (fit < min) {
+            fit = min;
+        }
+        if (fit > max) {
+            fit = max;
+        }
+        return fit;
+    }
+
+    private double gauss(double value, double stdev, double top) {
+        double val = Math.pow(1/(stdev * Math.sqrt(2 * Math.PI)),(-0.5 * ((value - top) * (value - top))/(stdev*stdev)));
+        if (stdev > 1) {
+            val = 1/val;
+        }
+        return val;
+    }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @NoArgsConstructor
@@ -38,5 +39,15 @@ public class Discrete implements ClassicSet {
         List<Double> discreteValues = discrete.getValues();
         List<Double> result = discreteValues.stream().filter(x -> values.contains(x)).toList();
         return new Discrete(result);
+    }
+
+    @Override
+    public double getBottom() {
+        return Collections.min(values);
+    }
+
+    @Override
+    public double getTop() {
+        return Collections.max(values);
     }
 }

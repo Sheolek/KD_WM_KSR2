@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,6 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.KSR2.view.controller.MainWindowController">
     <children>
@@ -18,126 +23,142 @@
                         <AnchorPane fx:id="listAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <TableView fx:id="houseTable" layoutX="14.0" layoutY="14.0" prefHeight="745.0" prefWidth="1172.0" />
-                            </children></AnchorPane>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Gen. 1 podmiot">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="773.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab text="Parametry">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="714.0" prefWidth="1196.0">
-                                       <children>
-                                          <TreeView fx:id="quantifiersTree" layoutX="100.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <Button fx:id="generateButton" layoutX="350.0" layoutY="584.0" mnemonicParsing="false" onAction="#generateSummaries" prefHeight="42.0" prefWidth="214.0" text="Generuj" />
-                                          <Button fx:id="resetButton" layoutX="649.0" layoutY="584.0" mnemonicParsing="false" onAction="#resetSummaries" prefHeight="42.0" prefWidth="214.0" text="Resetuj" />
-                                          <Label layoutX="198.0" layoutY="14.0" text="Kwantyfikatory" />
-                                          <TreeView fx:id="qualifiersTree" layoutX="457.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <TreeView fx:id="summarizersTree" layoutX="814.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <Label layoutX="573.0" layoutY="14.0" text="Kwalifikatory" />
-                                          <Label layoutX="927.0" layoutY="14.0" text="Sumaryzatory" />
-                                          <TextField fx:id="t1Weight" layoutX="100.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.5" />
-                                          <TextField fx:id="t2Weight" layoutX="188.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t3Weight" layoutX="288.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t4Weight" layoutX="379.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t5Weight" layoutX="474.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t6Weight" layoutX="569.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t7Weight" layoutX="666.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t8Weight" layoutX="762.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t9Weight" layoutX="857.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t10Weight" layoutX="950.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <TextField fx:id="t11Weight" layoutX="1051.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
-                                          <Label layoutX="573.0" layoutY="425.0" text="Wagi miar" />
-                                          <Label layoutX="125.0" layoutY="452.0" text="T1" />
-                                          <Label layoutX="213.0" layoutY="452.0" text="T2" />
-                                          <Label layoutX="313.0" layoutY="452.0" text="T3" />
-                                          <Label layoutX="404.0" layoutY="452.0" text="T4" />
-                                          <Label layoutX="499.0" layoutY="452.0" text="T5" />
-                                          <Label layoutX="594.0" layoutY="452.0" text="T6" />
-                                          <Label layoutX="691.0" layoutY="452.0" text="T7" />
-                                          <Label layoutX="787.0" layoutY="452.0" text="T8" />
-                                          <Label layoutX="882.0" layoutY="452.0" text="T9" />
-                                          <Label layoutX="971.0" layoutY="452.0" text="T10" />
-                                          <Label layoutX="1072.0" layoutY="452.0" text="T11" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                            <Tab fx:id="summary1results" text="Wyniki">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <TableView fx:id="houseTable1" layoutX="14.0" layoutY="7.0" prefHeight="726.0" prefWidth="1172.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
-                     </children></AnchorPane>
+                            <children>
+                                <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="773.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab text="Parametry">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="714.0" prefWidth="1196.0">
+                                                    <children>
+                                                        <TreeView fx:id="quantifiersTree" layoutX="100.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <Button fx:id="generateButton" layoutX="350.0" layoutY="584.0" mnemonicParsing="false" onAction="#generateSummaries" prefHeight="42.0" prefWidth="214.0" text="Generuj" />
+                                                        <Button fx:id="resetButton" layoutX="649.0" layoutY="584.0" mnemonicParsing="false" onAction="#resetSummaries" prefHeight="42.0" prefWidth="214.0" text="Resetuj" />
+                                                        <Label layoutX="198.0" layoutY="14.0" text="Kwantyfikatory" />
+                                                        <TreeView fx:id="qualifiersTree" layoutX="457.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <TreeView fx:id="summarizersTree" layoutX="814.0" layoutY="44.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <Label layoutX="573.0" layoutY="14.0" text="Kwalifikatory" />
+                                                        <Label layoutX="927.0" layoutY="14.0" text="Sumaryzatory" />
+                                                        <TextField fx:id="t1Weight" layoutX="100.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.5" />
+                                                        <TextField fx:id="t2Weight" layoutX="188.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t3Weight" layoutX="288.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t4Weight" layoutX="379.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t5Weight" layoutX="474.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t6Weight" layoutX="569.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t7Weight" layoutX="666.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t8Weight" layoutX="762.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t9Weight" layoutX="857.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t10Weight" layoutX="950.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <TextField fx:id="t11Weight" layoutX="1051.0" layoutY="477.0" prefHeight="16.0" prefWidth="62.0" text="0.05" />
+                                                        <Label layoutX="573.0" layoutY="425.0" text="Wagi miar" />
+                                                        <Label layoutX="125.0" layoutY="452.0" text="T1" />
+                                                        <Label layoutX="213.0" layoutY="452.0" text="T2" />
+                                                        <Label layoutX="313.0" layoutY="452.0" text="T3" />
+                                                        <Label layoutX="404.0" layoutY="452.0" text="T4" />
+                                                        <Label layoutX="499.0" layoutY="452.0" text="T5" />
+                                                        <Label layoutX="594.0" layoutY="452.0" text="T6" />
+                                                        <Label layoutX="691.0" layoutY="452.0" text="T7" />
+                                                        <Label layoutX="787.0" layoutY="452.0" text="T8" />
+                                                        <Label layoutX="882.0" layoutY="452.0" text="T9" />
+                                                        <Label layoutX="971.0" layoutY="452.0" text="T10" />
+                                                        <Label layoutX="1072.0" layoutY="452.0" text="T11" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                        <Tab fx:id="summary1results" text="Wyniki">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <TableView fx:id="houseTable1" layoutX="14.0" layoutY="7.0" prefHeight="726.0" prefWidth="1172.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                    </tabs>
+                                </TabPane>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
-            <Tab text="Gen. 2 podmiot">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="773.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
-                           <tabs>
-                              <Tab text="Parametry">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="714.0" prefWidth="1196.0">
-                                       <children>
-                                          <TreeView fx:id="quantifiersTree2" layoutX="94.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <Button fx:id="generateButton2" layoutX="350.0" layoutY="584.0" mnemonicParsing="false" onAction="#generateSummaries2" prefHeight="42.0" prefWidth="214.0" text="Generuj" />
-                                          <Button fx:id="resetButton2" layoutX="649.0" layoutY="584.0" mnemonicParsing="false" onAction="#resetSummaries2" prefHeight="42.0" prefWidth="214.0" text="Resetuj" />
-                                          <Label layoutX="192.0" layoutY="105.0" text="Kwantyfikatory" />
-                                          <TreeView fx:id="qualifiersTree2" layoutX="451.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <TreeView fx:id="summarizersTree2" layoutX="808.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
-                                          <Label layoutX="567.0" layoutY="105.0" text="Kwalifikatory" />
-                                          <Label layoutX="921.0" layoutY="105.0" text="Sumaryzatory" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab fx:id="summary2results" text="Wyniki">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <TableView fx:id="houseTable2" layoutX="14.0" layoutY="7.0" prefHeight="726.0" prefWidth="1172.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                           </tabs>
-                        </TabPane>
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Advanced">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TabPane layoutY="-4.0" prefHeight="777.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab text="Quantifiers">
-                              <content>
-                                <AnchorPane />
-                              </content>
-                            </Tab>
-                            <Tab text="Summarizers">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="764.0" prefWidth="1285.0" />
-                              </content>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
+                <Tab text="Gen. 2 podmiot">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="773.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab text="Parametry">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="714.0" prefWidth="1196.0">
+                                                    <children>
+                                                        <TreeView fx:id="quantifiersTree2" layoutX="94.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <Button fx:id="generateButton2" layoutX="350.0" layoutY="584.0" mnemonicParsing="false" onAction="#generateSummaries2" prefHeight="42.0" prefWidth="214.0" text="Generuj" />
+                                                        <Button fx:id="resetButton2" layoutX="649.0" layoutY="584.0" mnemonicParsing="false" onAction="#resetSummaries2" prefHeight="42.0" prefWidth="214.0" text="Resetuj" />
+                                                        <Label layoutX="192.0" layoutY="105.0" text="Kwantyfikatory" />
+                                                        <TreeView fx:id="qualifiersTree2" layoutX="451.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <TreeView fx:id="summarizersTree2" layoutX="808.0" layoutY="135.0" prefHeight="353.0" prefWidth="299.0" />
+                                                        <Label layoutX="567.0" layoutY="105.0" text="Kwalifikatory" />
+                                                        <Label layoutX="921.0" layoutY="105.0" text="Sumaryzatory" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                        <Tab fx:id="summary2results" text="Wyniki">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <TableView fx:id="houseTable2" layoutX="14.0" layoutY="7.0" prefHeight="726.0" prefWidth="1172.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                    </tabs>
+                                </TabPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Advanced">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="nameArg" layoutX="207.0" layoutY="186.0" />
+                                <TextField fx:id="arg1" layoutX="207.0" layoutY="240.0" />
+                                <TextField fx:id="arg2" layoutX="207.0" layoutY="292.0" />
+                                <TextField fx:id="arg3" layoutX="207.0" layoutY="355.0" />
+                                <TextField fx:id="arg4" layoutX="207.0" layoutY="418.0" />
+                                <Label layoutX="96.0" layoutY="190.0" text="Nazwa:" />
+                                <Label fx:id="arg1txt" layoutX="96.0" layoutY="244.0" text="Argument 1:" />
+                                <Label fx:id="arg2txt" layoutX="96.0" layoutY="296.0" text="Argument 2:" />
+                                <Label fx:id="arg3txt" layoutX="96.0" layoutY="359.0" text="Argument 3:" />
+                                <Label fx:id="arg4txt" layoutX="96.0" layoutY="422.0" text="Argument 5:" />
+                                <ChoiceBox fx:id="chooseType" layoutX="207.0" layoutY="55.0" prefWidth="150.0" />
+                                <ChoiceBox fx:id="chooseVariable" layoutX="206.0" layoutY="103.0" prefWidth="150.0" />
+                                <ChoiceBox fx:id="chooseFuncType" layoutX="206.0" layoutY="147.0" prefWidth="150.0" />
+                                <Button fx:id="createPreview" layoutX="214.0" layoutY="491.0" mnemonicParsing="false" onAction="#createPreview" prefHeight="63.0" prefWidth="136.0" text="Preview" />
+                                <Button fx:id="createLabel" layoutX="213.0" layoutY="590.0" mnemonicParsing="false" onAction="#createLabel" prefHeight="63.0" prefWidth="136.0" text="Stwórz" />
+                        <StackPane fx:id="stackPane" layoutX="380.0" layoutY="37.0" prefHeight="684.0" prefWidth="800.0">
+                           <children>
+                              <LineChart fx:id="chart" prefHeight="541.0" prefWidth="747.0">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
+                           </children>
+                        </StackPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
     </children>

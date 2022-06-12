@@ -15,12 +15,16 @@ public class Gauss implements MembershipFunction {
 
     @Override
     public double getMembership(double value) {
-        return Math.pow(1/(stdev * Math.sqrt(2 * Math.PI)),(-0.5 * (value - top)/(stdev*stdev)));
+        double val = Math.pow(1/(stdev * Math.sqrt(2 * Math.PI)),(-0.5 * ((value - top) * (value - top))/(stdev*stdev)));
+        if (stdev > 1) {
+            val = 1/val;
+        }
+        return val;
     }
 
     @Override
     public double getSupport() {
-        return stdev*2*1.2;
+        return stdev*2*2;
     }
 
     @Override

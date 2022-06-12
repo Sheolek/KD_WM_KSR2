@@ -41,4 +41,14 @@ public class Continuous implements ClassicSet {
     public ClassicSet getProduct(ClassicSet set) {
         return null;
     }
+
+    @Override
+    public double getBottom() {
+        return values.get(0)[0];
+    }
+
+    @Override
+    public double getTop() {
+        return values.get(0)[1];
+    }
 }
