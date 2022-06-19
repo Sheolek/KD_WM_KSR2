@@ -92,24 +92,32 @@ public class Measures {
 
         // T9
         {
-            double temp = 1;
-            //support/przestrzen
-            for (Label qualifier : qualifiers) {
-                temp *= qualifier.getSet().getFunction().getSupport() / qualifier.getSet().getUniverse().getSize();
+            if(numOfQualifiers > 0){
+                double temp = 1;
+                //support/przestrzen
+                for (Label qualifier : qualifiers) {
+                    temp *= qualifier.getSet().getFunction().getSupport() / qualifier.getSet().getUniverse().getSize();
+                }
+                temp = Math.pow(temp, 1.0 / numOfQualifiers);
+                setT9degreeOfQualifierImprecision(1 - temp);
+            } else {
+                setT9degreeOfQualifierImprecision(0);
             }
-            temp = Math.pow(temp, 1.0/numOfQualifiers);
-            setT9degreeOfQualifierImprecision(1 - temp);
         }
 
         // T10
         {
-            double temp = 1;
-            //cardinal/przestrzen
-            for (Label qualifier : qualifiers) {
-                temp *= qualifier.getSet().getFunction().getCardinalNumber() / qualifier.getSet().getUniverse().getSize();
+            if(numOfQualifiers > 0) {
+                double temp = 1;
+                //cardinal/przestrzen
+                for (Label qualifier : qualifiers) {
+                    temp *= qualifier.getSet().getFunction().getCardinalNumber() / qualifier.getSet().getUniverse().getSize();
+                }
+                temp = Math.pow(temp, 1.0 / numOfQualifiers);
+                setT10degreeOfQualifierCardinality(1 - temp);
+            } else {
+                setT10degreeOfQualifierCardinality(0);
             }
-            temp = Math.pow(temp, 1.0/numOfQualifiers);
-            setT10degreeOfQualifierCardinality(1 - temp);
         }
 
         // T11
